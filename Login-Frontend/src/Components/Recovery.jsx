@@ -1,8 +1,7 @@
 import React from 'react'
 import { NavLink } from "react-router-dom"
 import { Toaster } from 'react-hot-toast'
-import { useFormik } from 'formik'
-import { passwordValidate } from './Helper/validate'
+
 
 const Recovery = () => {
 
