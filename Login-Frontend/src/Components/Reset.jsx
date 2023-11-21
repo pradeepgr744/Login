@@ -2,15 +2,16 @@ import React from 'react'
 import { NavLink } from "react-router-dom"
 import { Toaster } from 'react-hot-toast'
 import { useFormik } from 'formik'
-import { passwordValidate } from './Helper/validate'
+import { resetpasswordValidation } from './Helper/validate'
 
 const Reset = () => {
 
   const formik = useFormik({
     initialValues: {
-      username: ''
+      password: '',
+      confirm_pwd: ''
     },
-    validate:passwordValidate,
+    validate:resetpasswordValidation,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async values => {
@@ -22,9 +23,9 @@ const Reset = () => {
     <>
       <div className='h-screen flex justify-center items-center bg-bgimg bg-no-repeat bg-cover bg-center bg-fixed'>
         <Toaster position='top-center' reverseOrder='false'></Toaster>
-        <div className='w-[400px] h-[400px] border-2 border-gray-300 rounded-3xl '>
+        <div className='w-96 h-96 border-2 border-gray-300 rounded-3xl '>
           <div className=' flex justify-center blur-0  items-center backdrop-blur-sm rounded-3xl '>
-            <form className=' py-1 w-[300px] h-[380px]' onSubmit={formik.handleSubmit}>
+            <form className=' py-1 w-80 h-80' onSubmit={formik.handleSubmit}>
               <div>
                 <h1 className='text-center font-semibold text-3xl text-white mt-5'>Reset</h1>
               </div>
@@ -33,11 +34,11 @@ const Reset = () => {
               </div>
               
               <div className='text-center mt-10'>
-                <input {...formik.getFieldProps('password')} type="password" placeholder='Password' 
+                <input {...formik.getFieldProps('password')} type="password" placeholder='New Password' 
                   className='w-full rounded-full px-7 outline-none border-2 mt-5
                       py-2 border-gray-300 bg-transparent caret-white text-gray-300 '
                 />
-                <input {...formik.getFieldProps('password')} type="password" placeholder='Confirm Password' 
+                <input {...formik.getFieldProps('confirm_pwd')} type="password" placeholder='Confirm Password' 
                   className='w-full rounded-full px-7 outline-none border-2 mt-2
                       py-2 border-gray-300 bg-transparent caret-white text-gray-300 '
                 />

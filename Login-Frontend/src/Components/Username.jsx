@@ -23,9 +23,9 @@ const Username = () => {
 
       <div className='h-screen flex justify-center items-center bg-bgimg bg-no-repeat bg-cover bg-center bg-fixed'>
         <Toaster position='top-center' reverseOrder='false'></Toaster>
-        <div className='w-[400px] h-[400px] border-2 border-gray-300 rounded-3xl '>
+        <div className='w-96 h-96  border-2 border-gray-300 rounded-3xl '>
           <div className=' flex justify-center blur-0  items-center backdrop-blur-sm rounded-3xl '>
-            <form className=' py-1 w-[300px] h-[380px]' onSubmit={formik.handleSubmit}>
+            <form className=' py-1 w-80 h-80' onSubmit={formik.handleSubmit}>
               <div>
                 <h1 className='text-center font-semibold text-3xl text-white mt-5'>Hello Again!</h1>
               </div>
