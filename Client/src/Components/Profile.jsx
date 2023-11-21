@@ -11,11 +11,11 @@ const Profile = () => {
 
   const formik = useFormik({
     initialValues: {
-      fname:'',
-      lname:'',
+      fname: '',
+      lname: '',
       email: '',
-      mobile:'',
-      address:'',
+      mobile: '',
+      address: '',
     },
     validate: profileValidate,
     validateOnBlur: false,
@@ -38,7 +38,7 @@ const Profile = () => {
         <Toaster position='top-center' reverseOrder='false'></Toaster>
         <div className='border-2 border-gray-300 rounded-3xl '>
           <div className=' flex justify-center blur-0  items-center backdrop-blur-sm rounded-3xl '>
-            <form className=' py-5 mx-16 w-5/6 h-5/6' onSubmit={formik.handleSubmit}>
+            <form className=' my-5 mx-5 w-5/6 h-5/6' onSubmit={formik.handleSubmit}>
               <div>
                 <h1 className='text-center font-semibold text-3xl text-white mt-5'>Profile</h1>
               </div>
@@ -55,42 +55,45 @@ const Profile = () => {
                 />
               </div>
 
-              <div className='text-center'>
-                <div className='flex w-3/4 gap-10'>
-                  <input {...formik.getFieldProps('fname')} type="text" placeholder='FirstName'
-                    className='w-full rounded-full px-7 outline-none border-2 mt-5
+              <div className='flex justify-center'>
+                <div>
+                  <div className='flex w-full gap-10'>
+                    <input {...formik.getFieldProps('fname')} type="text" placeholder='FirstName'
+                      className='w-full rounded-full px-3 outline-none border-2 mt-5
                       py-2 border-gray-300 bg-transparent caret-white text-gray-300 '
-                  />
-                  <input {...formik.getFieldProps('lname')} type="text" placeholder='LastName'
-                    className='w-full rounded-full px-7 outline-none border-2 mt-5
+                    />
+                    <input {...formik.getFieldProps('lname')} type="text" placeholder='LastName'
+                      className='w-full rounded-full px-3 outline-none border-2 mt-5
                       py-2 border-gray-300 bg-transparent caret-white text-gray-300 '
-                  />
-                </div>
-                <div className='flex w-3/4 gap-10'>
-                  <input {...formik.getFieldProps('mobile')} type="number" placeholder='Mobile No.'
-                    className=' w-full rounded-full px-3 outline-none border-2 mt-5
+                    />
+                  </div>
+                  <div className='flex w-full gap-10'>
+                    <input {...formik.getFieldProps('mobile')} type="number" placeholder='Mobile No.'
+                      className='w-full rounded-full px-3 outline-none border-2 mt-5
                       py-2 border-gray-300 bg-transparent caret-white text-gray-300 '
-                  />
-                  <input {...formik.getFieldProps('email')} type="email" placeholder='Email'
-                    className='w-full rounded-full px-3 outline-none border-2 mt-5
+                    />
+                    <input {...formik.getFieldProps('email')} type="email" placeholder='Email'
+                      className='w-full rounded-full px-3 outline-none border-2 mt-5
                       py-2 border-gray-300 bg-transparent caret-white text-gray-300 '
-                  />
-                </div>
-               <div className='w-3/4'>
-                  <input {...formik.getFieldProps('address')} type="txt" placeholder='Address'
-                    className='w-full rounded-full px-3 outline-none border-2 mt-5
+                    />
+                  </div>
+                  <div className=''>
+                    <input {...formik.getFieldProps('address')} type="txt" placeholder='Address'
+                      className='w-full rounded-full px-3 outline-none border-2 mt-5
                       py-2 border-gray-300 bg-transparent caret-white text-gray-300 '
-                  />
-                
-                <br />
-                <button type='submit'
-                  className='w-full  flex justify-center bg-white rounded-full mt-5 py-2 items-center shadow-md hover:shadow-gray-700 font-semibold'
-                >Update</button>
+                    />
+
+                    <br />
+                    <button type='submit'
+                      className='w-full  flex justify-center bg-white rounded-full mt-5 py-2 items-center shadow-md hover:shadow-gray-700 font-semibold'
+                    >Update</button>
+                  </div>
                 </div>
               </div>
               <div className='text-center mt-10 text-sm'>
                 <span className=' text-gray-300 '>Come back later?<NavLink to='../' className='text-gray-200 font-semibold'> Logout</NavLink></span>
               </div>
+
             </form>
           </div>
         </div>
