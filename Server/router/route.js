@@ -5,7 +5,7 @@ const router=Router();
 import * as controller from '../Controllers/appController.js'
 
 /* Post Methods */
-router.route('/register').post(controller.register)
+router.route('/register').post(controller.register);
 // router.route('/registerMail').post();
 router.route('/authenticate').post((req,res)=>res.end());
 router.route('/login').post(controller.login);

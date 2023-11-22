@@ -1,74 +1,99 @@
 import UserModel from "../Model/UserModel.js"
+import { jwt } from 'jsonwebtoken'
+
+
+/** POST: http://localhost:8080/api/register 
+ * @param : {
+  "username" : "example123",
+  "password" : "admin123",
+  "email": "example@gmail.com",
+  "firstName" : "bill",
+  "lastName": "william",
+  "mobile": 8009860560,
+  "address" : "Apt. 556, Kulas Light, Gwenborough",
+  "profile": ""
+}
+*/
 import bcrypt from 'bcrypt';
 
-
-/** 
- {
-    "username": "example123",
-    "password": "admin123",
-    "email": "example123@example.com",
-    "firstName": "example",
-    "lastName": "example",
-    "mobil":8083442444,
-    "address": "af 342,fsakjaf,afds",
-    "profile": "",
- }
- */
 export async function register(req, res) {
     try {
-        const { username, password, email, profile } = req.body;
+        const { username, password, profile, email } = req.body;
 
-        const existUsername = new Promise((resolve, reject) => {
-            UserModel.findOne({ username }, function(err, user) {
-                if(err) reject(new Error(err));
-                if(user) reject({ error: "Please use unique username" });
+        // Check if username already exists
+        const existingUsername = await UserModel.findOne({ username });
+        if (existingUsername) {
+            return res.status(400).send({ error: "Please use a unique username" });
+        }
 
-                resolve();
-            })
-        })
-        const existEmail = new Promise((resolve, reject) => {
-            UserModel.findOne({ email }, function(err, email) {
-                if (err) reject(new Error(err));
-                if (email) reject({ error: "Please use unique Email" });
+        // Check if email already exists
+        const existingEmail = await UserModel.findOne({ email });
+        if (existingEmail) {
+            return res.status(400).send({ error: "Please use a unique email" });
+        }
 
-                resolve();
-            })
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create a new user
+        const user = new UserModel({
+            username,
+            password: hashedPassword,
+            profile: profile || '',
+            email,
         });
 
-        Promise.all([existUsername, existEmail])
-            .then(() => {
-                if(password){
-                    bcrypt.hash(password, 10)
-                        .then( hashedPassword => {
+        // Save the user to the database
+        const result = await user.save();
 
-                            const user = new UserModel({
-                                username,
-                                password: hashedPassword,
-                                profile: profile || '',
-                                email
-                            });
-                            user.save()
-                                .then(result => res.status(201).send({ msg: "User Register Successfully" }))
-                                .catch(error => res.status(500).send({ error }))
-                        }).catch(error => {
-                            return res.status(500).send({
-                                error: "Enable to hashed password"
-                            })
-                        })
-                }
-
-
-            }).catch(error => {
-                return res.status(500).send({ error })
-            })
-
+        // Respond to the client
+        return res.status(201).send({ msg: "User registered successfully"});
     } catch (error) {
-        return res.status(500).send(error);
+        console.error(error);
+
+        // Handle specific error cases
+        if (error instanceof Error) {
+            return res.status(500).send({ error: error.message });
+        } else {
+            return res.status(500).send({ error: "Internal Server Error" });
+        }
     }
 }
 
 export async function login(req, res) {
-    res.json('login route')
+
+    const {username, password}=req.body;
+
+    try{
+        UserModel.findOne({username})
+        .then(user=>{
+            bcrypt.compare(password, user.password)
+            .then(passwordCheck=>{
+                if(!passwordCheck) return res.status(400).send({error:"Don't have Password"});
+
+                // create jwt token
+                jwt.sign({
+                    userId:user._id,
+                    username:user.username
+                },'secret',{expiresIn:"24h"})
+                return res.status(200).send({
+                    msg:"Login Successful..!",
+                    username: user.username,
+                    token
+                })
+            })
+            .catch(error=>{
+                return res.status(400).send({error:"password does not match"})
+            })
+        })
+        .catch(error=>{
+            return res.status(404).send({error:"Username not Found"});
+        })
+
+    }catch(error){
+        return res.status(500).send({error});
+    }
+
 }
 
 export async function getUser(req, res) {
