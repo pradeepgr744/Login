@@ -43,12 +43,13 @@ const Username = () => {
                       py-2 border-gray-300 bg-transparent caret-white text-gray-300 '
                 />
                 <br />
+                
                 <button type='submit'
                   className='w-full  flex justify-center bg-white rounded-full mt-5 py-[3.5px] items-center shadow-md hover:shadow-gray-700'
                 ><img src="arrow.svg" alt="" className='w-7 animate-bounce ' /></button>
               </div>
               <div className='text-center mt-10 text-sm'>
-                <span className=' text-gray-300 '>Don't have an account?<NavLink to='password' className='text-gray-200 font-semibold'> Register</NavLink></span>
+                <span className=' text-gray-300 '>Don't have an account?<NavLink to='register' className='text-gray-200 font-semibold'> Register</NavLink></span>
               </div>
             </form>
           </div>
